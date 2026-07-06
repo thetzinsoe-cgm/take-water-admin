@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Take Water - Sale Report</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app">
+    <div class="sidebar-overlay"></div>
+    <aside class="sidebar">
+      <div class="sidebar-header"><img src="assets/logo.svg" alt="Take Water" class="sidebar-logo"><div class="sidebar-brand"><h3>TAKE WATER</h3><span>PURIFIED DELIVERY</span></div></div>
+      <nav class="sidebar-nav">
+        <div class="nav-section"><a href="dashboard.html" class="nav-item" data-page="dashboard"><span class="icon">📊</span> Dashboard</a></div>
+        <div class="nav-section"><div class="nav-section-title">Management</div>
+          <a href="products.html" class="nav-item" data-page="products"><span class="icon">📦</span> Products</a>
+          <a href="customers.html" class="nav-item" data-page="customers"><span class="icon">👤</span> Customers</a>
+          <a href="orders.html" class="nav-item" data-page="orders"><span class="icon">🛒</span> Orders</a>
+        </div>
+        <div class="nav-section"><div class="nav-section-title">Resources</div>
+          <a href="staff.html" class="nav-item" data-page="staff"><span class="icon">👥</span> Staff</a>
+          <a href="knowledge.html" class="nav-item" data-page="knowledge"><span class="icon">📖</span> Knowledge</a>
+        </div>
+        <div class="nav-section"><div class="nav-section-title">Analytics</div>
+          <div class="nav-item" onclick="toggleSubmenu(this)"><span class="icon">📈</span> Reports <span class="arrow">▾</span></div>
+          <div class="submenu open">
+            <a href="sale-report.html" class="nav-item active" data-page="sale-report"><span class="icon">💰</span> Sale Report</a>
+            <a href="customer-report.html" class="nav-item" data-page="customer-report"><span class="icon">👤</span> Customer Report</a>
+            <a href="top-selling-report.html" class="nav-item" data-page="top-selling-report"><span class="icon">🏆</span> Top Selling Report</a>
+          </div>
+        </div>
+        <div class="nav-section"><div class="nav-section-title">System</div>
+          <a href="settings.html" class="nav-item" data-page="settings"><span class="icon">⚙️</span> Settings</a>
+          <a href="index.html" class="nav-item"><span class="icon">🚪</span> Logout</a>
+        </div>
+      </nav>
+    </aside>
+
+    <div class="main-content">
+      <header class="header">
+        <div class="header-left"><button class="hamburger">☰</button><h1 class="page-title">Sale Report</h1></div>
+        <div class="header-right">
+          <div class="header-lang"><button class="lang-btn active">MY</button><button class="lang-btn">EN</button></div>
+          <div class="header-user"><div class="user-avatar">A</div><div class="user-info"><span class="user-name">Admin 16</span><span class="user-role">Company Admin</span></div></div>
+        </div>
+      </header>
+
+      <div class="content">
+        <!-- Filters -->
+        <div class="card" style="margin-bottom: 24px;">
+          <div class="card-body">
+            <div style="display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap;">
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label">From Date</label>
+                <input type="date" class="form-control" id="fromDate" value="2026-07-01">
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label">To Date</label>
+                <input type="date" class="form-control" id="toDate" value="2026-07-06">
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label">Report Type</label>
+                <select class="form-control" id="reportType">
+                  <option value="daily">Daily</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="yearly">Yearly</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" onclick="generateReport()">🔍 Generate Report</button>
+              <button class="btn btn-secondary" onclick="exportReport()">📥 Export</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="grid grid-4" style="margin-bottom: 24px;">
+          <div class="stat-card">
+            <div class="stat-icon blue">💰</div>
+            <div class="stat-label">Total Sales</div>
+            <div class="stat-value" id="totalSales">1,250,000 Ks</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">📊</div>
+            <div class="stat-label">Total Orders</div>
+            <div class="stat-value" id="totalOrders">156</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon blue">📈</div>
+            <div class="stat-label">Average Order</div>
+            <div class="stat-value" id="avgOrder">8,013 Ks</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon orange">📈</div>
+            <div class="stat-label">Growth</div>
+            <div class="stat-value text-success" id="growth">+12.5%</div>
+          </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="card" style="margin-bottom: 24px;">
+          <div class="card-header">
+            <h3>📈 Sales Trend</h3>
+          </div>
+          <div class="card-body">
+            <div class="chart-container">
+              <canvas id="salesTrendChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sales Table -->
+        <div class="card">
+          <div class="card-header">
+            <h3>📋 Sales Details</h3>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Invoice</th>
+                    <th>Customer</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="salesTableBody">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // Sales data for report
+    const salesData = [
+      { date: '2026-07-06', invoice: 'INV-2026-001', customer: 'Ko Min Thura', items: 2, total: 5000, payment: 'Cash', status: 'Delivered' },
+      { date: '2026-07-06', invoice: 'INV-2026-002', customer: 'Ma Su Mon', items: 1, total: 2500, payment: 'KBZPay', status: 'Pending' },
+      { date: '2026-07-05', invoice: 'INV-2026-003', customer: 'U Kyaw Zin', items: 3, total: 7800, payment: 'WaveMoney', status: 'Delivered' },
+      { date: '2026-07-05', invoice: 'INV-2026-004', customer: 'Daw Thin Thin', items: 1, total: 1800, payment: 'Cash', status: 'Cancelled' },
+      { date: '2026-07-04', invoice: 'INV-2026-005', customer: 'Ko Aung Myo', items: 4, total: 12000, payment: 'Cash', status: 'Delivered' },
+      { date: '2026-07-04', invoice: 'INV-2026-006', customer: 'Ma Htay Htay', items: 2, total: 5000, payment: 'Credit', status: 'Pending' },
+      { date: '2026-07-03', invoice: 'INV-2026-007', customer: 'U Ba Kyi', items: 1, total: 2500, payment: 'Cash', status: 'Delivered' },
+      { date: '2026-07-03', invoice: 'INV-2026-008', customer: 'Ma Khin Mar', items: 2, total: 4300, payment: 'KBZPay', status: 'Delivered' },
+    ];
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderSalesTable(salesData);
+      initSalesChart();
+    });
+
+    function renderSalesTable(data) {
+      const tbody = document.getElementById('salesTableBody');
+      tbody.innerHTML = data.map(row => `
+        <tr>
+          <td>${row.date}</td>
+          <td><strong>${row.invoice}</strong></td>
+          <td>${row.customer}</td>
+          <td>${row.items}</td>
+          <td><strong class="text-primary">${formatCurrency(row.total)}</strong></td>
+          <td>${getPaymentBadge(row.payment)}</td>
+          <td>${getStatusBadge(row.status)}</td>
+        </tr>
+      `).join('');
+    }
+
+    function initSalesChart() {
+      const ctx = document.getElementById('salesTrendChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Jul 1', 'Jul 2', 'Jul 3', 'Jul 4', 'Jul 5', 'Jul 6'],
+          datasets: [{
+            label: 'Daily Sales (Ks)',
+            data: [45000, 52000, 68000, 17000, 9600, 7500],
+            backgroundColor: 'rgba(37, 99, 235, 0.8)',
+            borderColor: 'rgba(37, 99, 235, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+    }
+
+    function generateReport() {
+      alert('Report generated! In real app, this would fetch data from API.');
+    }
+
+    function exportReport() {
+      alert('Exporting report... In real app, this would download CSV/Excel file.');
+    }
+  </script>
+</body>
+</html>

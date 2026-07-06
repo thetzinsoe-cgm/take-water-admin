@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Take Water - Top Selling Report</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app">
+    <div class="sidebar-overlay"></div>
+    <aside class="sidebar">
+      <div class="sidebar-header"><img src="assets/logo.svg" alt="Take Water" class="sidebar-logo"><div class="sidebar-brand"><h3>TAKE WATER</h3><span>PURIFIED DELIVERY</span></div></div>
+      <nav class="sidebar-nav">
+        <div class="nav-section"><a href="dashboard.html" class="nav-item" data-page="dashboard"><span class="icon">📊</span> Dashboard</a></div>
+        <div class="nav-section"><div class="nav-section-title">Management</div>
+          <a href="products.html" class="nav-item" data-page="products"><span class="icon">📦</span> Products</a>
+          <a href="customers.html" class="nav-item" data-page="customers"><span class="icon">👤</span> Customers</a>
+          <a href="orders.html" class="nav-item" data-page="orders"><span class="icon">🛒</span> Orders</a>
+        </div>
+        <div class="nav-section"><div class="nav-section-title">Resources</div>
+          <a href="staff.html" class="nav-item" data-page="staff"><span class="icon">👥</span> Staff</a>
+          <a href="knowledge.html" class="nav-item" data-page="knowledge"><span class="icon">📖</span> Knowledge</a>
+        </div>
+        <div class="nav-section"><div class="nav-section-title">Analytics</div>
+          <div class="nav-item" onclick="toggleSubmenu(this)"><span class="icon">📈</span> Reports <span class="arrow">▾</span></div>
+          <div class="submenu open">
+            <a href="sale-report.html" class="nav-item" data-page="sale-report"><span class="icon">💰</span> Sale Report</a>
+            <a href="customer-report.html" class="nav-item" data-page="customer-report"><span class="icon">👤</span> Customer Report</a>
+            <a href="top-selling-report.html" class="nav-item active" data-page="top-selling-report"><span class="icon">🏆</span> Top Selling Report</a>
+          </div>
+        </div>
+        <div class="nav-section"><div class="nav-section-title">System</div>
+          <a href="settings.html" class="nav-item" data-page="settings"><span class="icon">⚙️</span> Settings</a>
+          <a href="index.html" class="nav-item"><span class="icon">🚪</span> Logout</a>
+        </div>
+      </nav>
+    </aside>
+
+    <div class="main-content">
+      <header class="header">
+        <div class="header-left"><button class="hamburger">☰</button><h1 class="page-title">Top Selling Report</h1></div>
+        <div class="header-right">
+          <div class="header-lang"><button class="lang-btn active">MY</button><button class="lang-btn">EN</button></div>
+          <div class="header-user"><div class="user-avatar">A</div><div class="user-info"><span class="user-name">Admin 16</span><span class="user-role">Company Admin</span></div></div>
+        </div>
+      </header>
+
+      <div class="content">
+        <!-- Filters -->
+        <div class="card" style="margin-bottom: 24px;">
+          <div class="card-body">
+            <div style="display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap;">
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label">Period</label>
+                <select class="form-control">
+                  <option>This Month</option>
+                  <option>Last Month</option>
+                  <option>This Quarter</option>
+                  <option>This Year</option>
+                </select>
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label">Category</label>
+                <select class="form-control">
+                  <option value="">All Categories</option>
+                  <option>Large Bottle</option>
+                  <option>Small Pack</option>
+                </select>
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label">Show Top</label>
+                <select class="form-control">
+                  <option>Top 5</option>
+                  <option>Top 10</option>
+                  <option>Top 20</option>
+                </select>
+              </div>
+              <button class="btn btn-primary">🔍 Generate Report</button>
+              <button class="btn btn-secondary">📥 Export</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="grid grid-4" style="margin-bottom: 24px;">
+          <div class="stat-card">
+            <div class="stat-icon blue">📦</div>
+            <div class="stat-label">Total Products Sold</div>
+            <div class="stat-value">1,230</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">💰</div>
+            <div class="stat-label">Total Revenue</div>
+            <div class="stat-value text-success">4,569,000 Ks</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon blue">🏆</div>
+            <div class="stat-label">Top Product</div>
+            <div class="stat-value" style="font-size: 1rem;">Premium 20L</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon orange">📈</div>
+            <div class="stat-label">Avg Items/Order</div>
+            <div class="stat-value">2.4</div>
+          </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="grid grid-2" style="margin-bottom: 24px;">
+          <!-- Sales by Product Chart -->
+          <div class="card">
+            <div class="card-header">
+              <h3>📊 Sales by Product</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="salesByProductChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Revenue by Category Chart -->
+          <div class="card">
+            <div class="card-header">
+              <h3>🍩 Revenue by Category</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="revenueByCategoryChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Products Table -->
+        <div class="card">
+          <div class="card-header">
+            <h3>🏆 Top Selling Products</h3>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Unit Price</th>
+                    <th>Qty Sold</th>
+                    <th>Revenue</th>
+                    <th>% of Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>🥇 1</strong></td>
+                    <td><strong>Take Premium Purified 20L</strong></td>
+                    <td><span class="badge badge-info">Large Bottle</span></td>
+                    <td>2,500 Ks</td>
+                    <td><strong>450</strong></td>
+                    <td><strong class="text-primary">1,125,000 Ks</strong></td>
+                    <td>
+                      <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="flex: 1; background: #e5e7eb; border-radius: 4px; height: 8px;">
+                          <div style="width: 100%; background: #22c55e; height: 100%; border-radius: 4px;"></div>
+                        </div>
+                        <span>24.6%</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>🥈 2</strong></td>
+                    <td><strong>Take 500mL Mini Pack (24)</strong></td>
+                    <td><span class="badge badge-info">Small Pack</span></td>
+                    <td>8,000 Ks</td>
+                    <td><strong>180</strong></td>
+                    <td><strong class="text-primary">1,440,000 Ks</strong></td>
+                    <td>
+                      <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="flex: 1; background: #e5e7eb; border-radius: 4px; height: 8px;">
+                          <div style="width: 85%; background: #3b82f6; height: 100%; border-radius: 4px;"></div>
+                        </div>
+                        <span>31.5%</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>🥉 3</strong></td>
+                    <td><strong>Take 1L Slim Pack (12)</strong></td>
+                    <td><span class="badge badge-info">Small Pack</span></td>
+                    <td>6,000 Ks</td>
+                    <td><strong>220</strong></td>
+                    <td><strong class="text-primary">1,320,000 Ks</strong></td>
+                    <td>
+                      <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="flex: 1; background: #e5e7eb; border-radius: 4px; height: 8px;">
+                          <div style="width: 75%; background: #f59e0b; height: 100%; border-radius: 4px;"></div>
+                        </div>
+                        <span>28.9%</span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>4</strong></td>
+                    <td><strong>Take Purified 10L</strong></td>
+                    <td><span class="badge badge-info">Large Bottle</span></td>
+                    <td>1,800 Ks</td>
+                    <td><strong>380</strong></td>
+                    <td><strong class="text-primary">684,000 Ks</strong></td>
+                    <td>
+                      <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="flex: 1; background: #e5e7eb; border-radius: 4px; height: 8px;">
+                          <div style="width: 45%; background: #8b5cf6; height: 100%; border-radius: 4px;"></div>
+                        </div>
+                        <span>15.0%</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initTopSellingCharts();
+    });
+
+    function initTopSellingCharts() {
+      // Sales by Product Chart
+      const ctx1 = document.getElementById('salesByProductChart').getContext('2d');
+      new Chart(ctx1, {
+        type: 'bar',
+        data: {
+          labels: ['Premium 20L', 'Purified 10L', '1L Slim Pack', '500mL Mini Pack'],
+          datasets: [{
+            label: 'Quantity Sold',
+            data: [450, 380, 220, 180],
+            backgroundColor: [
+              'rgba(34, 197, 94, 0.8)',
+              'rgba(37, 99, 235, 0.8)',
+              'rgba(245, 158, 11, 0.8)',
+              'rgba(139, 92, 246, 0.8)'
+            ],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+
+      // Revenue by Category Chart
+      const ctx2 = document.getElementById('revenueByCategoryChart').getContext('2d');
+      new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+          labels: ['Large Bottle', 'Small Pack'],
+          datasets: [{
+            data: [1809000, 2760000],
+            backgroundColor: [
+              'rgba(37, 99, 235, 0.8)',
+              'rgba(34, 197, 94, 0.8)'
+            ],
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom' }
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>

@@ -89,7 +89,7 @@ function renderTable(containerId, columns, data, options = {}) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  const { pageSize = 10, actions = true } = options;
+  const { pageSize = 10, actions = true, customActions = false } = options;
 
   let html = '<div class="table-container"><table class="table"><thead><tr>';
 
@@ -120,10 +120,14 @@ function renderTable(containerId, columns, data, options = {}) {
         html += `<td>${value}</td>`;
       });
       if (actions) {
-        html += `<td class="table-actions">
-          <button class="btn btn-icon btn-sm btn-secondary" title="Edit" onclick="editItem(${row.id})">✏️</button>
-          <button class="btn btn-icon btn-sm btn-danger" title="Delete" onclick="deleteItem(${row.id})">🗑️</button>
-        </td>`;
+        if (customActions && typeof renderOrderActions === 'function') {
+          html += `<td class="table-actions">${renderOrderActions(row.id)}</td>`;
+        } else {
+          html += `<td class="table-actions">
+            <button class="btn btn-icon btn-sm btn-secondary" title="Edit" onclick="editItem(${row.id})">✏️</button>
+            <button class="btn btn-icon btn-sm btn-danger" title="Delete" onclick="deleteItem(${row.id})">🗑️</button>
+          </td>`;
+        }
       }
       html += '</tr>';
     });
@@ -155,6 +159,17 @@ function deleteItem(id) {
   }
 }
 
+// View order detail
+function viewOrder(invoice) {
+  window.location.href = `order-detail.html?invoice=${invoice}`;
+}
+
+// Get URL parameter
+function getUrlParam(param) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}
+
 // Format number with commas
 function formatNumber(num) {
   return new Intl.NumberFormat('en-US').format(num);
@@ -164,4 +179,35 @@ function formatNumber(num) {
 document.addEventListener('DOMContentLoaded', () => {
   initSidebar();
   initSidebarToggle();
+  initSubmenus();
 });
+
+// Submenu toggle
+function toggleSubmenu(element) {
+  const submenu = element.nextElementSibling;
+  const arrow = element.querySelector('.arrow');
+  if (submenu && submenu.classList.contains('submenu')) {
+    submenu.classList.toggle('open');
+    if (arrow) {
+      arrow.textContent = submenu.classList.contains('open') ? '▾' : '▸';
+    }
+  }
+}
+
+// Initialize submenus based on current page
+function initSubmenus() {
+  const currentPage = getCurrentPage();
+  const submenuItems = document.querySelectorAll('.submenu .nav-item');
+
+  submenuItems.forEach(item => {
+    const page = item.getAttribute('data-page');
+    if (page === currentPage) {
+      const submenu = item.closest('.submenu');
+      if (submenu) {
+        submenu.classList.add('open');
+        const arrow = submenu.previousElementSibling?.querySelector('.arrow');
+        if (arrow) arrow.textContent = '▾';
+      }
+    }
+  });
+}

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Take Water - Customer Report</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app">
+    <div class="sidebar-overlay"></div>
+    <aside class="sidebar">
+      <div class="sidebar-header"><img src="assets/logo.svg" alt="Take Water" class="sidebar-logo"><div class="sidebar-brand"><h3>TAKE WATER</h3><span>PURIFIED DELIVERY</span></div></div>
+      <nav class="sidebar-nav">
+        <div class="nav-section"><a href="dashboard.html" class="nav-item" data-page="dashboard"><span class="icon">📊</span> Dashboard</a></div>
+        <div class="nav-section"><div class="nav-section-title">Management</div>
+          <a href="products.html" class="nav-item" data-page="products"><span class="icon">📦</span> Products</a>
+          <a href="customers.html" class="nav-item" data-page="customers"><span class="icon">👤</span> Customers</a>
+          <a href="orders.html" class="nav-item" data-page="orders"><span class="icon">🛒</span> Orders</a>
+        </div>
+        <div class="nav-section"><div class="nav-section-title">Resources</div>
+          <a href="staff.html" class="nav-item" data-page="staff"><span class="icon">👥</span> Staff</a>
+          <a href="knowledge.html" class="nav-item" data-page="knowledge"><span class="icon">📖</span> Knowledge</a>
+        </div>
+        <div class="nav-section"><div class="nav-section-title">Analytics</div>
+          <div class="nav-item" onclick="toggleSubmenu(this)"><span class="icon">📈</span> Reports <span class="arrow">▾</span></div>
+          <div class="submenu open">
+            <a href="sale-report.html" class="nav-item" data-page="sale-report"><span class="icon">💰</span> Sale Report</a>
+            <a href="customer-report.html" class="nav-item active" data-page="customer-report"><span class="icon">👤</span> Customer Report</a>
+            <a href="top-selling-report.html" class="nav-item" data-page="top-selling-report"><span class="icon">🏆</span> Top Selling Report</a>
+          </div>
+        </div>
+        <div class="nav-section"><div class="nav-section-title">System</div>
+          <a href="settings.html" class="nav-item" data-page="settings"><span class="icon">⚙️</span> Settings</a>
+          <a href="index.html" class="nav-item"><span class="icon">🚪</span> Logout</a>
+        </div>
+      </nav>
+    </aside>
+
+    <div class="main-content">
+      <header class="header">
+        <div class="header-left"><button class="hamburger">☰</button><h1 class="page-title">Customer Report</h1></div>
+        <div class="header-right">
+          <div class="header-lang"><button class="lang-btn active">MY</button><button class="lang-btn">EN</button></div>
+          <div class="header-user"><div class="user-avatar">A</div><div class="user-info"><span class="user-name">Admin 16</span><span class="user-role">Company Admin</span></div></div>
+        </div>
+      </header>
+
+      <div class="content">
+        <!-- Filters -->
+        <div class="card" style="margin-bottom: 24px;">
+          <div class="card-body">
+            <div style="display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap;">
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label">Customer Name</label>
+                <input type="text" class="form-control" placeholder="Search customer...">
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label">Customer Type</label>
+                <select class="form-control">
+                  <option value="">All Types</option>
+                  <option>VIP</option>
+                  <option>Regular</option>
+                  <option>New</option>
+                </select>
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label">Sort By</label>
+                <select class="form-control">
+                  <option>Total Spending (High to Low)</option>
+                  <option>Total Spending (Low to High)</option>
+                  <option>Most Orders</option>
+                  <option>Recently Active</option>
+                </select>
+              </div>
+              <button class="btn btn-primary">🔍 Generate Report</button>
+              <button class="btn btn-secondary">📥 Export</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="grid grid-4" style="margin-bottom: 24px;">
+          <div class="stat-card">
+            <div class="stat-icon blue">👥</div>
+            <div class="stat-label">Total Customers</div>
+            <div class="stat-value">248</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">🆕</div>
+            <div class="stat-label">New This Month</div>
+            <div class="stat-value text-success">18</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon blue">⭐</div>
+            <div class="stat-label">VIP Customers</div>
+            <div class="stat-value">32</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon orange">🔄</div>
+            <div class="stat-label">Repeat Rate</div>
+            <div class="stat-value">76%</div>
+          </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="card" style="margin-bottom: 24px;">
+          <div class="card-header">
+            <h3>📊 Customer Growth</h3>
+          </div>
+          <div class="card-body">
+            <div class="chart-container">
+              <canvas id="customerGrowthChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Customers Table -->
+        <div class="card">
+          <div class="card-header">
+            <h3>🏆 Top Customers by Spending</h3>
+          </div>
+          <div class="card-body" style="padding: 0;">
+            <div class="table-container">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>Customer</th>
+                    <th>Phone</th>
+                    <th>Orders</th>
+                    <th>Total Spent</th>
+                    <th>Avg Order</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>1</strong></td>
+                    <td><strong>Ko Aung Myo</strong></td>
+                    <td>09456789012</td>
+                    <td>24</td>
+                    <td><strong class="text-primary">92,000 Ks</strong></td>
+                    <td>3,833 Ks</td>
+                    <td><span class="badge badge-warning">VIP</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>2</strong></td>
+                    <td><strong>U Kyaw Zin</strong></td>
+                    <td>09123456789</td>
+                    <td>18</td>
+                    <td><strong class="text-primary">78,000 Ks</strong></td>
+                    <td>4,333 Ks</td>
+                    <td><span class="badge badge-warning">VIP</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>3</strong></td>
+                    <td><strong>U Ba Kyi</strong></td>
+                    <td>09234567890</td>
+                    <td>15</td>
+                    <td><strong class="text-primary">55,000 Ks</strong></td>
+                    <td>3,667 Ks</td>
+                    <td><span class="badge badge-info">Regular</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>4</strong></td>
+                    <td><strong>Ko Min Thura</strong></td>
+                    <td>09777123456</td>
+                    <td>12</td>
+                    <td><strong class="text-primary">45,000 Ks</strong></td>
+                    <td>3,750 Ks</td>
+                    <td><span class="badge badge-warning">VIP</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>5</strong></td>
+                    <td><strong>Ma Su Mon</strong></td>
+                    <td>09955443322</td>
+                    <td>10</td>
+                    <td><strong class="text-primary">32,000 Ks</strong></td>
+                    <td>3,200 Ks</td>
+                    <td><span class="badge badge-info">Regular</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initCustomerChart();
+    });
+
+    function initCustomerChart() {
+      const ctx = document.getElementById('customerGrowthChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+          datasets: [{
+            label: 'New Customers',
+            data: [12, 15, 18, 14, 22, 19, 18],
+            borderColor: 'rgba(37, 99, 235, 1)',
+            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+            fill: true,
+            tension: 0.4
+          }, {
+            label: 'Active Customers',
+            data: [180, 195, 210, 205, 225, 240, 248],
+            borderColor: 'rgba(34, 197, 94, 1)',
+            backgroundColor: 'rgba(34, 197, 94, 0.1)',
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { position: 'top' } },
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+    }
+  </script>
+</body>
+</html>

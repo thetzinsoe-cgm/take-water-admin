@@ -5,14 +5,14 @@
 const MOCK_DATA = {
   // Products
   products: [
-    { id: 1, name: "Take Premium Purified 20L", category: "Large Bottle", price: 2500, stock: 150, unit: "Bottle", barcode: "TW20L001", image: "💧" },
-    { id: 2, name: "Take Purified 10L", category: "Large Bottle", price: 1800, stock: 200, unit: "Bottle", barcode: "TW10L001", image: "💧" },
-    { id: 3, name: "Take 1L Slim Pack (12)", category: "Small Pack", price: 6000, stock: 80, unit: "Pack", barcode: "TW1L012", image: "📦" },
-    { id: 4, name: "Take 500mL Mini Pack (24)", category: "Small Pack", price: 8000, stock: 60, unit: "Pack", barcode: "TW500M24", image: "📦" },
-    { id: 5, name: "Take Premium Purified 20L", category: "Large Bottle", price: 2500, stock: 120, unit: "Bottle", barcode: "TW20L002", image: "💧" },
-    { id: 6, name: "Take Purified 10L", category: "Large Bottle", price: 1800, stock: 180, unit: "Bottle", barcode: "TW10L002", image: "💧" },
-    { id: 7, name: "Take 1L Slim Pack (12)", category: "Small Pack", price: 6000, stock: 95, unit: "Pack", barcode: "TW1L013", image: "📦" },
-    { id: 8, name: "Take 500mL Mini Pack (24)", category: "Small Pack", price: 8000, stock: 45, unit: "Pack", barcode: "TW500M25", image: "📦" },
+    { id: 1, name: "Take Premium Purified 20L", category: "Large Bottle", price: 2500, stock: 150, unit: "Bottle", barcode: "TW20L001", image: "💧", packItems: null },
+    { id: 2, name: "Take Purified 10L", category: "Large Bottle", price: 1800, stock: 200, unit: "Bottle", barcode: "TW10L001", image: "💧", packItems: null },
+    { id: 3, name: "Take 1L Slim Pack", category: "Small Pack", price: 6000, stock: 80, unit: "Pack", barcode: "TW1L012", image: "📦", packItems: 12 },
+    { id: 4, name: "Take 500mL Mini Pack", category: "Small Pack", price: 8000, stock: 60, unit: "Pack", barcode: "TW500M24", image: "📦", packItems: 24 },
+    { id: 5, name: "Take Premium Purified 20L (Box)", category: "Large Bottle", price: 2500, stock: 120, unit: "Bottle", barcode: "TW20L002", image: "💧", packItems: null },
+    { id: 6, name: "Take Purified 10L (Box)", category: "Large Bottle", price: 1800, stock: 180, unit: "Bottle", barcode: "TW10L002", image: "💧", packItems: null },
+    { id: 7, name: "Take 1L Family Pack", category: "Small Pack", price: 6000, stock: 95, unit: "Pack", barcode: "TW1L013", image: "📦", packItems: 6 },
+    { id: 8, name: "Take 500mL Party Pack", category: "Small Pack", price: 8000, stock: 45, unit: "Pack", barcode: "TW500M25", image: "📦", packItems: 48 },
   ],
 
   // Customers
@@ -94,6 +94,41 @@ const MOCK_DATA = {
     { name: "Take 1L Pack (12)", sold: 220, revenue: 1320000, image: "📦" },
     { name: "Take 500mL Pack (24)", sold: 180, revenue: 1440000, image: "📦" },
   ],
+
+  // Knowledge Articles
+  knowledge: [
+    { id: 1, title: "How Much Purified Water Do You Need Daily?", category: "Health", status: "Published", author: "Dr. Aung Kyaw", createdDate: "2026-07-01" },
+    { id: 2, title: "Understanding Multi-Stage Water Purification: RO vs. UV vs. Ozone", category: "Technology", status: "Published", author: "Tech Team", createdDate: "2026-06-28" },
+    { id: 3, title: "5 Subtle Signs of Dehydration", category: "Lifestyle", status: "Published", author: "Health Blog", createdDate: "2026-06-25" },
+    { id: 4, title: "Benefits of Drinking Purified Water for Children", category: "Health", status: "Draft", author: "Dr. Aung Kyaw", createdDate: "2026-07-05" },
+    { id: 5, title: "Water Quality Standards in Myanmar", category: "Technology", status: "Published", author: "QA Team", createdDate: "2026-06-20" },
+  ],
+
+  // Order Details (for detail page)
+  orderDetails: {
+    "INV-2026-002": {
+      invoice: "INV-2026-002",
+      date: "2026-07-06 10:30 AM",
+      deliveryDate: "2026-07-06 (Same Day)",
+      status: "Pending",
+      paymentMethod: "KBZPay",
+      customer: {
+        name: "Ma Su Mon",
+        phone: "09955443322",
+        address: "No. 45, Pyay Road, Yangon",
+        type: "Regular"
+      },
+      items: [
+        { product: "Take Premium Purified 20L", category: "Large Bottle", qty: 1, unitPrice: 2500, total: 2500 }
+      ],
+      subtotal: 2500,
+      deliveryFee: 1500,
+      grandTotal: 4000,
+      paymentScreenshot: true,
+      screenshotDate: "2026-07-06 10:35 AM",
+      notes: "Customer requested morning delivery before 10 AM. Gate code: 1234"
+    }
+  },
 };
 
 // Helper functions

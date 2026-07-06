@@ -19,14 +19,19 @@
           <a href="products.html" class="nav-item" data-page="products"><span class="icon">📦</span> Products</a>
           <a href="customers.html" class="nav-item" data-page="customers"><span class="icon">👤</span> Customers</a>
           <a href="orders.html" class="nav-item" data-page="orders"><span class="icon">🛒</span> Orders <span class="badge">3</span></a>
-          <a href="stock.html" class="nav-item" data-page="stock"><span class="icon">📊</span> Stock</a>
         </div>
         <div class="nav-section"><div class="nav-section-title">Resources</div>
-          <a href="suppliers.html" class="nav-item" data-page="suppliers"><span class="icon">🚚</span> Suppliers</a>
           <a href="staff.html" class="nav-item" data-page="staff"><span class="icon">👥</span> Staff</a>
-          <a href="categories.html" class="nav-item" data-page="categories"><span class="icon">📂</span> Categories</a>
+          <a href="knowledge.html" class="nav-item" data-page="knowledge"><span class="icon">📖</span> Knowledge</a>
         </div>
-        <div class="nav-section"><div class="nav-section-title">Analytics</div><a href="reports.html" class="nav-item" data-page="reports"><span class="icon">📈</span> Reports</a></div>
+        <div class="nav-section"><div class="nav-section-title">Analytics</div>
+          <div class="nav-item" onclick="toggleSubmenu(this)"><span class="icon">📈</span> Reports <span class="arrow">▸</span></div>
+          <div class="submenu">
+            <a href="sale-report.html" class="nav-item" data-page="sale-report"><span class="icon">💰</span> Sale Report</a>
+            <a href="customer-report.html" class="nav-item" data-page="customer-report"><span class="icon">👤</span> Customer Report</a>
+            <a href="top-selling-report.html" class="nav-item" data-page="top-selling-report"><span class="icon">🏆</span> Top Selling Report</a>
+          </div>
+        </div>
         <div class="nav-section"><div class="nav-section-title">System</div>
           <a href="settings.html" class="nav-item active" data-page="settings"><span class="icon">⚙️</span> Settings</a>
           <a href="index.html" class="nav-item"><span class="icon">🚪</span> Logout</a>

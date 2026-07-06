@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Take Water - Order Detail</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <style>
+    .order-detail-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+    .payment-screenshot {
+      width: 100%;
+      max-width: 400px;
+      border: 2px dashed var(--border-color);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      background: var(--bg-main);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .payment-screenshot:hover {
+      border-color: var(--primary);
+      background: rgba(37, 99, 235, 0.05);
+    }
+    .payment-screenshot img {
+      max-width: 100%;
+      border-radius: var(--radius);
+    }
+    .screenshot-placeholder {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    .info-label {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    .info-value {
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="sidebar-overlay"></div>
+    <aside class="sidebar">
+      <div class="sidebar-header"><img src="assets/logo.svg" alt="Take Water" class="sidebar-logo"><div class="sidebar-brand"><h3>TAKE WATER</h3><span>PURIFIED DELIVERY</span></div></div>
+      <nav class="sidebar-nav">
+        <div class="nav-section"><a href="dashboard.html" class="nav-item" data-page="dashboard"><span class="icon">📊</span> Dashboard</a></div>
+        <div class="nav-section"><div class="nav-section-title">Management</div>
+          <a href="products.html" class="nav-item" data-page="products"><span class="icon">📦</span> Products</a>
+          <a href="customers.html" class="nav-item" data-page="customers"><span class="icon">👤</span> Customers</a>
+          <a href="orders.html" class="nav-item active" data-page="orders"><span class="icon">🛒</span> Orders <span class="badge">3</span></a>
+        </div>
+        <div class="nav-section"><div class="nav-section-title">Resources</div>
+          <a href="staff.html" class="nav-item" data-page="staff"><span class="icon">👥</span> Staff</a>
+          <a href="knowledge.html" class="nav-item" data-page="knowledge"><span class="icon">📖</span> Knowledge</a>
+        </div>
+        <div class="nav-section"><div class="nav-section-title">Analytics</div>
+          <div class="nav-item" onclick="toggleSubmenu(this)"><span class="icon">📈</span> Reports <span class="arrow">▸</span></div>
+          <div class="submenu">
+            <a href="sale-report.html" class="nav-item" data-page="sale-report"><span class="icon">💰</span> Sale Report</a>
+            <a href="customer-report.html" class="nav-item" data-page="customer-report"><span class="icon">👤</span> Customer Report</a>
+            <a href="top-selling-report.html" class="nav-item" data-page="top-selling-report"><span class="icon">🏆</span> Top Selling Report</a>
+          </div>
+        </div>
+        <div class="nav-section"><div class="nav-section-title">System</div>
+          <a href="settings.html" class="nav-item" data-page="settings"><span class="icon">⚙️</span> Settings</a>
+          <a href="index.html" class="nav-item"><span class="icon">🚪</span> Logout</a>
+        </div>
+      </nav>
+    </aside>
+
+    <div class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="hamburger">☰</button>
+          <a href="orders.html" class="btn btn-sm btn-secondary" style="margin-right: 12px;">← Back</a>
+          <h1 class="page-title">Order Detail - INV-2026-002</h1>
+        </div>
+        <div class="header-right">
+          <div class="header-lang"><button class="lang-btn active">MY</button><button class="lang-btn">EN</button></div>
+          <div class="header-user"><div class="user-avatar">A</div><div class="user-info"><span class="user-name">Admin 16</span><span class="user-role">Company Admin</span></div></div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="order-detail-grid">
+          <!-- Left Column - Order Info -->
+          <div>
+            <!-- Order Status -->
+            <div class="card" style="margin-bottom: 24px;">
+              <div class="card-header">
+                <h3>📦 Order Information</h3>
+                <span class="badge badge-warning" style="font-size: 0.9rem; padding: 6px 12px;">Pending</span>
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span class="info-label">Invoice Number</span>
+                  <span class="info-value">INV-2026-002</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Order Date</span>
+                  <span class="info-value">2026-07-06 10:30 AM</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Delivery Date</span>
+                  <span class="info-value">2026-07-06 (Same Day)</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Payment Method</span>
+                  <span class="info-value"><span class="badge badge-info">KBZPay</span></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customer Info -->
+            <div class="card" style="margin-bottom: 24px;">
+              <div class="card-header">
+                <h3>👤 Customer Information</h3>
+              </div>
+              <div class="card-body">
+                <div class="info-row">
+                  <span class="info-label">Customer Name</span>
+                  <span class="info-value">Ma Su Mon</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Phone Number</span>
+                  <span class="info-value">09955443322</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Delivery Address</span>
+                  <span class="info-value">No. 45, Pyay Road, Yangon</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Customer Type</span>
+                  <span class="info-value">Regular</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Order Items -->
+            <div class="card">
+              <div class="card-header">
+                <h3>🛒 Order Items</h3>
+              </div>
+              <div class="card-body" style="padding: 0;">
+                <div class="table-container">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Qty</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>Take Premium Purified 20L</strong></td>
+                        <td><span class="badge badge-info">Large Bottle</span></td>
+                        <td>1</td>
+                        <td>2,500 Ks</td>
+                        <td><strong>2,500 Ks</strong></td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr style="background: var(--bg-main);">
+                        <td colspan="4" style="text-align: right;"><strong>Subtotal:</strong></td>
+                        <td><strong>2,500 Ks</strong></td>
+                      </tr>
+                      <tr style="background: var(--bg-main);">
+                        <td colspan="4" style="text-align: right;"><strong>Delivery Fee:</strong></td>
+                        <td><strong>1,500 Ks</strong></td>
+                      </tr>
+                      <tr style="background: var(--primary-lighter); color: white;">
+                        <td colspan="4" style="text-align: right;"><strong>Grand Total:</strong></td>
+                        <td><strong>4,000 Ks</strong></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column - Payment Screenshot -->
+          <div>
+            <!-- Payment Screenshot -->
+            <div class="card" style="margin-bottom: 24px;">
+              <div class="card-header">
+                <h3>📸 Payment Screenshot</h3>
+              </div>
+              <div class="card-body">
+                <div class="payment-screenshot" onclick="document.getElementById('screenshotInput').click()">
+                  <!-- Placeholder - In real app, this would show uploaded image -->
+                  <div style="font-size: 4rem; margin-bottom: 16px;">📱</div>
+                  <div class="screenshot-placeholder">
+                    <p><strong>KBZPay Payment Screenshot</strong></p>
+                    <p style="font-size: 0.8rem; margin-top: 8px;">Click to view full size</p>
+                    <p style="font-size: 0.75rem; margin-top: 4px; color: var(--text-muted);">Uploaded: 2026-07-06 10:35 AM</p>
+                  </div>
+                  <!-- Sample image for demo -->
+                  <div style="margin-top: 16px; padding: 20px; background: white; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">Sample KBZPay Screenshot</div>
+                    <div style="font-size: 1.5rem; margin: 8px 0;">💰</div>
+                    <div style="font-weight: 600;">4,000 Ks</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted);">To: Take Water Co.</div>
+                  </div>
+                </div>
+                <input type="file" id="screenshotInput" accept="image/*" style="display: none;">
+              </div>
+            </div>
+
+            <!-- Order Notes -->
+            <div class="card" style="margin-bottom: 24px;">
+              <div class="card-header">
+                <h3>📝 Order Notes</h3>
+              </div>
+              <div class="card-body">
+                <textarea class="form-control" rows="4" placeholder="Add notes about this order...">Customer requested morning delivery before 10 AM. Gate code: 1234</textarea>
+                <button class="btn btn-primary btn-sm" style="margin-top: 12px;">Save Notes</button>
+              </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card">
+              <div class="card-header">
+                <h3>⚡ Quick Actions</h3>
+              </div>
+              <div class="card-body" style="display: flex; flex-direction: column; gap: 8px;">
+                <button class="btn btn-success" style="width: 100%;">✅ Mark as Delivered</button>
+                <button class="btn btn-secondary" style="width: 100%;">🖨️ Print Invoice</button>
+                <button class="btn btn-secondary" style="width: 100%;">💬 Send Message to Customer</button>
+                <button class="btn btn-danger" style="width: 100%;">❌ Cancel Order</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
