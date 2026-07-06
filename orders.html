@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Take Water - Orders</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+  <div class="app">
+    <div class="sidebar-overlay"></div>
+    <aside class="sidebar">
+      <div class="sidebar-header"><img src="assets/logo.svg" alt="Take Water" class="sidebar-logo"><div class="sidebar-brand"><h3>TAKE WATER</h3><span>PURIFIED DELIVERY</span></div></div>
+      <nav class="sidebar-nav">
+        <div class="nav-section"><a href="dashboard.html" class="nav-item" data-page="dashboard"><span class="icon">📊</span> Dashboard</a></div>
+        <div class="nav-section"><div class="nav-section-title">Management</div>
+          <a href="products.html" class="nav-item" data-page="products"><span class="icon">📦</span> Products</a>
+          <a href="customers.html" class="nav-item" data-page="customers"><span class="icon">👤</span> Customers</a>
+          <a href="orders.html" class="nav-item active" data-page="orders"><span class="icon">🛒</span> Orders <span class="badge">3</span></a>
+          <a href="stock.html" class="nav-item" data-page="stock"><span class="icon">📊</span> Stock</a>
+        </div>
+        <div class="nav-section"><div class="nav-section-title">Resources</div>
+          <a href="suppliers.html" class="nav-item" data-page="suppliers"><span class="icon">🚚</span> Suppliers</a>
+          <a href="staff.html" class="nav-item" data-page="staff"><span class="icon">👥</span> Staff</a>
+          <a href="categories.html" class="nav-item" data-page="categories"><span class="icon">📂</span> Categories</a>
+        </div>
+        <div class="nav-section"><div class="nav-section-title">Analytics</div><a href="reports.html" class="nav-item" data-page="reports"><span class="icon">📈</span> Reports</a></div>
+        <div class="nav-section"><div class="nav-section-title">System</div>
+          <a href="settings.html" class="nav-item" data-page="settings"><span class="icon">⚙️</span> Settings</a>
+          <a href="index.html" class="nav-item"><span class="icon">🚪</span> Logout</a>
+        </div>
+      </nav>
+    </aside>
+
+    <div class="main-content">
+      <header class="header">
+        <div class="header-left"><button class="hamburger">☰</button><h1 class="page-title">Order Management</h1></div>
+        <div class="header-right">
+          <div class="header-lang"><button class="lang-btn active">MY</button><button class="lang-btn">EN</button></div>
+          <div class="header-user"><div class="user-avatar">A</div><div class="user-info"><span class="user-name">Admin 16</span><span class="user-role">Company Admin</span></div></div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="toolbar">
+          <div class="toolbar-row">
+            <div class="form-group"><label class="form-label">From Date</label><input type="date" class="form-control" value="2026-07-01"></div>
+            <div class="form-group"><label class="form-label">To Date</label><input type="date" class="form-control" value="2026-07-06"></div>
+            <div class="form-group"><label class="form-label">Invoice Number</label><input type="text" class="form-control" placeholder="INV-XXXX-XXX"></div>
+            <div class="form-group"><label class="form-label">Status</label>
+              <select class="form-control"><option value="">All Status</option><option>Delivered</option><option>Pending</option><option>Cancelled</option></select>
+            </div>
+            <div class="form-group"><label class="form-label">Payment Type</label>
+              <select class="form-control"><option value="">All Types</option><option>Cash</option><option>KBZPay</option><option>WaveMoney</option><option>Credit</option></select>
+            </div>
+          </div>
+          <div class="toolbar-actions">
+            <button class="btn btn-primary">🔍 Search</button>
+            <button class="btn btn-secondary">Clear</button>
+            <button class="btn btn-secondary">📥 Download</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body" style="padding: 0;">
+            <div id="ordersTable"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTable('ordersTable', [
+        { key: 'id', label: 'Invoice', render: (v) => `<strong>${v}</strong>` },
+        { key: 'date', label: 'Date' },
+        { key: 'customer', label: 'Customer' },
+        { key: 'phone', label: 'Phone' },
+        { key: 'items', label: 'Items' },
+        { key: 'total', label: 'Total', render: (v) => `<strong class="text-primary">${formatCurrency(v)}</strong>` },
+        { key: 'status', label: 'Status', render: (v) => getStatusBadge(v) },
+        { key: 'payment', label: 'Payment', render: (v) => getPaymentBadge(v) },
+      ], MOCK_DATA.orders);
+    });
+  </script>
+</body>
+</html>
